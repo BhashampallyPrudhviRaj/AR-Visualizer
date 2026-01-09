@@ -3,7 +3,7 @@
 import { useState, useRef } from 'react'
 import { useGesture } from '@use-gesture/react'
 import { Button } from '@/components/ui/button'
-import { Upload, X } from 'lucide-react'
+import { Upload, X, Camera } from 'lucide-react'
 
 interface RoomVisualizerProps {
   rugImageUrl: string
@@ -61,15 +61,14 @@ export function RoomVisualizer({ rugImageUrl: initialRugUrl, onClose }: RoomVisu
   }
 
   // Gestures
-  useGesture(
+  const bind = useGesture(
     {
       onDrag: ({ offset: [x, y] }) => {
         setPosition({ x, y })
       },
-      onPinch: ({ offset: [s, a], memo }) => {
+      onPinch: ({ offset: [s, a] }) => {
          setScale(s)
          setRotation(a)
-         return memo
       },
       onWheel: ({ delta: [, dy], ctrlKey }) => {
          if (ctrlKey) {
@@ -78,7 +77,6 @@ export function RoomVisualizer({ rugImageUrl: initialRugUrl, onClose }: RoomVisu
       }
     },
     {
-      target: containerRef,
       drag: { from: () => [position.x, position.y] },
       pinch: { scaleBounds: { min: 0.1, max: 5 }, from: () => [scale, rotation] },
       eventOptions: { passive: false }
@@ -164,10 +162,11 @@ export function RoomVisualizer({ rugImageUrl: initialRugUrl, onClose }: RoomVisu
         {/* The Adjustable Rug Overlay (Visible only when camera/photo exists) */}
         {(isCameraActive || roomImage) && (
           <div 
+             {...bind()}
              ref={containerRef}
-             className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 cursor-move touch-none z-20"
+             className="absolute top-1/2 left-1/2 cursor-move touch-none z-20"
              style={{
-               transform: `translate(${position.x}px, ${position.y}px) rotate(${rotation}deg) scale(${scale})`,
+               transform: `translate(-50%, -50%) translate(${position.x}px, ${position.y}px) rotate(${rotation}deg) scale(${scale})`,
                touchAction: 'none' 
              }}
           >
