@@ -1,5 +1,3 @@
-"use client"
-
 import { useState, useRef } from 'react'
 import { useGesture } from '@use-gesture/react'
 import { Button } from '@/components/ui/button'
@@ -93,7 +91,7 @@ export function RoomVisualizer({ rugImageUrl: initialRugUrl, onClose }: RoomVisu
   }
 
   return (
-    <div className="fixed inset-0 z-50 bg-black flex flex-col items-center justify-center touch-none overflow-hidden">
+    <div className="fixed inset-0 z-50 bg-black flex flex-col items-center justify-center touch-none overflow-hidden bg-[radial-gradient(ellipse_at_center,_var(--color-atlas-red-dark)_0%,_#000000_100%)]">
       {/* Header / Controls */}
       <div className="absolute top-0 left-0 right-0 p-4 flex justify-between items-start z-30 bg-gradient-to-b from-black/80 to-transparent pointer-events-none">
         <Button variant="ghost" className="text-white pointer-events-auto bg-black/20 backdrop-blur-sm rounded-full" onClick={() => { stopCamera(); onClose(); }}>
@@ -121,7 +119,7 @@ export function RoomVisualizer({ rugImageUrl: initialRugUrl, onClose }: RoomVisu
       </div>
 
       {/* Main Viewport */}
-      <div className="relative w-full h-full flex items-center justify-center bg-stone-900">
+      <div className="relative w-full h-full flex items-center justify-center bg-transparent">
         {/* Live Video Background */}
         <video 
           ref={videoRef}
@@ -144,16 +142,22 @@ export function RoomVisualizer({ rugImageUrl: initialRugUrl, onClose }: RoomVisu
         {!isCameraActive && !roomImage && (
           <div className="text-center p-8 max-w-sm z-10">
             <h3 className="text-2xl font-serif text-white mb-6">Choose Your View</h3>
-            <div className="flex flex-col gap-4">
-               <Button size="lg" variant="luxury" onClick={startCamera} className="h-16">
-                 <Camera className="w-6 h-6 mr-3" /> Start Live Camera
+             <div className="flex flex-col gap-4 w-full max-w-xs">
+               <Button size="lg" variant="luxury" onClick={startCamera} className="h-14 text-lg w-full shadow-lg shadow-red-900/20">
+                 <Camera className="w-5 h-5 mr-3" /> Start Live Camera
                </Button>
-               <div className="text-stone-500 text-sm">--- OR ---</div>
-               <label className="cursor-pointer">
+               
+               <div className="flex items-center gap-4 w-full">
+                  <div className="h-px bg-white/20 flex-1" />
+                  <span className="text-stone-400 text-sm font-medium">OR</span>
+                  <div className="h-px bg-white/20 flex-1" />
+               </div>
+
+               <label className="cursor-pointer w-full">
                  <input type="file" accept="image/*" className="hidden" onChange={handleFileChange} />
-                 <div className="flex h-16 items-center justify-center rounded-md border border-white/20 bg-white/5 text-white hover:bg-white/10 transition-colors">
-                   <Upload className="w-6 h-6 mr-3" /> Upload Room Photo
-                 </div>
+                  <div className="flex h-14 w-full items-center justify-center rounded-md border border-white/30 bg-white/5 text-white hover:bg-white/10 hover:border-white/50 transition-all font-medium backdrop-blur-sm">
+                    <Upload className="w-5 h-5 mr-3" /> Upload Photo
+                  </div>
                </label>
             </div>
           </div>

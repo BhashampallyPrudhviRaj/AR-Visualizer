@@ -64,7 +64,7 @@ export function ProductActions({ product }: ProductActionsProps) {
             </Button>
          )}
 
-         <Button size="lg" variant="outline" className="w-full">
+         <Button size="lg" variant="secondary" className="w-full">
            Add to Cart
          </Button>
          

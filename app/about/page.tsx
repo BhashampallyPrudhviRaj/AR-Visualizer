@@ -1,37 +1,41 @@
-import { Header } from "@/components/layout/Header"
-import { Footer } from "@/components/layout/Footer"
+import { Button } from "@/components/ui/button"
+import Link from "next/link"
+import { ArrowLeft } from "lucide-react"
 
 export default function AboutPage() {
   return (
-    <div className="min-h-screen flex flex-col bg-white">
-      <Header />
-      <main className="flex-1 container mx-auto px-4 py-16 md:py-24 max-w-4xl">
-        <h1 className="text-4xl md:text-6xl font-serif text-stone-900 mb-8">Our Story</h1>
-        <div className="prose prose-stone lg:prose-xl">
-          <p className="text-xl text-stone-600 mb-6 italic font-serif">
-            Crafting elegance, one thread at a time.
+    <div className="min-h-screen pt-24 pb-12 px-4 md:px-8 max-w-4xl mx-auto">
+      <Link href="/" className="inline-flex items-center text-stone-500 hover:text-[var(--color-atlas-red)] mb-8 transition-colors">
+        <ArrowLeft className="w-4 h-4 mr-2" /> Back to Home
+      </Link>
+      
+      <div className="space-y-8">
+        <div className="space-y-4">
+          <h1 className="text-4xl md:text-5xl font-serif text-[var(--color-atlas-red)]">Our Story</h1>
+          <p className="text-xl text-stone-600 leading-relaxed font-light">
+            Since 1986, Atlas Rug Gallery has been the premier destination for fine antique and decorative rugs in the Washington DC metropolitan area.
           </p>
-          <p className="mb-4">
-            Luxe Rugs was founded on a simple principle: that every home deserves a foundation of beauty and comfort. 
-            For over two decades, we have traveled the world to source the finest materials and partner with 
-            artisans who have mastered the ancient art of weaving.
-          </p>
-          <p className="mb-4">
-            Our collection is a curated blend of traditional heritage and modern design, ensuring that 
-            whether you are looking for an heirloom-quality Oushak or a sleek geometric statement piece, 
-            you will find it here.
-          </p>
-          <div className="bg-stone-50 p-8 rounded-lg border border-stone-100 my-12">
-            <h2 className="text-2xl font-serif text-stone-900 mb-4 italic">Our Commitment</h2>
-            <p className="text-stone-700">
-              We are committed to ethical sourcing, sustainable practices, and the preservation of 
-              traditional craftsmanship. Every rug in our collection tells a story of heritage, 
-              dedication, and unmatched quality.
-            </p>
-          </div>
         </div>
-      </main>
-      <Footer />
+
+        <div className="prose prose-stone max-w-none">
+          <p>
+            We specialize in curating an exceptional collection of hand-knotted rugs from around the world. 
+            Our passion lies in finding unique pieces that tell a story—from the intricate floral motifs of Persian Kerman rugs 
+            to the bold geometric patterns of Caucasian weavings.
+          </p>
+          <p>
+            Whether you are looking for a museum-quality antique restoration or a modern statement piece for your living room, 
+            our expert team is dedicated to helping you find the perfect foundation for your space.
+          </p>
+        </div>
+
+        <div className="bg-stone-100 p-8 rounded-lg mt-12 border-l-4 border-[var(--color-atlas-green)]">
+          <h3 className="text-xl font-bold mb-2">Visit Our Gallery</h3>
+          <p className="text-stone-700">
+            Experience the texture and colors in person. Our showroom offers a welcoming atmosphere where you can see, touch, and feel the history woven into every rug.
+          </p>
+        </div>
+      </div>
     </div>
   )
 }

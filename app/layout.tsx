@@ -1,21 +1,15 @@
 import type { Metadata } from "next";
-import { Playfair_Display, Lato } from "next/font/google";
+import { Open_Sans } from "next/font/google";
 import "./globals.css";
 
-const playfair = Playfair_Display({
-  variable: "--font-playfair",
+const openSans = Open_Sans({
   subsets: ["latin"],
-});
-
-const lato = Lato({
-  variable: "--font-lato",
-  weight: ["300", "400", "700"],
-  subsets: ["latin"],
+  variable: "--font-open-sans",
 });
 
 export const metadata: Metadata = {
-  title: "Luxe Rugs AR",
-  description: "Experience luxury rugs in your home with Augmented Reality.",
+  title: "Atlas Rug Gallery AR",
+  description: "Experience the finest antique and modern rugs in your home with Augmented Reality. Serving Washington DC since 1986.",
 };
 
 export default function RootLayout({
@@ -26,7 +20,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${playfair.variable} ${lato.variable} antialiased font-sans bg-stone-50 text-stone-900`}
+        className={`${openSans.variable} antialiased font-sans bg-stone-50 text-stone-900`}
       >
         {children}
       </body>

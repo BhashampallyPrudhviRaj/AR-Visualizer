@@ -1,8 +1,8 @@
 @import "tailwindcss";
 
 @theme {
-  --font-serif: var(--font-playfair);
-  --font-sans: var(--font-lato);
+  --font-serif: "Open Sans", system-ui, sans-serif; /* Atlas mostly uses sans-serif */
+  --font-sans: "Arial", system-ui, sans-serif;
   
   --color-stone-50: #fafaf9;
   --color-stone-100: #f5f5f4;
@@ -11,8 +11,14 @@
   --color-stone-800: #292524;
   --color-stone-900: #1c1917;
   
-  --color-gold-500: #d4af37;
-  --color-gold-600: #bfa132;
+  /* Atlas Rug Gallery Brand Colors */
+  --color-atlas-red: #A10A26;
+  --color-atlas-green: #727F05;
+  --color-atlas-red-dark: #8a0820;
+  
+  /* Retain gold mapping but point to Atlas colors where appropriate or keep for accents */
+  --color-gold-500: #A10A26; /* Mapping 'luxury' variant to primary red */
+  --color-gold-600: #8a0820;
 }
 
 :root {

@@ -30,17 +30,18 @@ export default function ArClientPage({ product }: ArClientPageProps) {
           <div className="grid gap-4">
             <Button 
               size="lg" 
-              className="h-24 bg-white text-stone-900 hover:bg-stone-100 flex flex-col gap-1 items-center justify-center"
+              variant="luxury"
+              className="h-24 text-stone-50 hover:bg-red-900/90 flex flex-col gap-1 items-center justify-center shadow-xl"
               onClick={() => setViewMode('3d')}
             >
               <span className="text-lg font-bold">Standard 3D / AR</span>
-              <span className="text-xs opacity-60">Uses Augmented Reality (Mobile only)</span>
+              <span className="text-xs opacity-80">Uses Augmented Reality (Mobile only)</span>
             </Button>
 
             <Button 
               size="lg" 
               variant="outline"
-              className="h-24 border-white/20 hover:bg-white/10 flex flex-col gap-1 items-center justify-center"
+              className="h-24 border-white/20 bg-white/5 text-white hover:bg-white/10 hover:border-white/40 flex flex-col gap-1 items-center justify-center backdrop-blur-sm"
               onClick={() => setViewMode('2d')}
             >
               <span className="text-lg font-bold">2D Room Visualizer</span>
