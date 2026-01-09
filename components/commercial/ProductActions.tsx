@@ -20,7 +20,7 @@ export function ProductActions({ product }: ProductActionsProps) {
     // Basic desktop detection
     const checkDesktop = () => {
       setIsDesktop(window.matchMedia("(min-width: 768px)").matches)
-      setCurrentUrl(`${window.location.origin}/ar/${product.slug}`)
+      setCurrentUrl(`${window.location.origin}/AR-Visualizer/ar/${product.slug}/`)
     }
     
     checkDesktop()

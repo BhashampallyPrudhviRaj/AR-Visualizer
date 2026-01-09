@@ -1,59 +1,42 @@
 # Luxe Rugs AR Visualizer
 
-A premium, mobile-first web application for visualizing luxury rugs in augmented reality. Built with Next.js 14, TypeScript, Tailwind CSS, and Google's `<model-viewer>`.
+A premium, mobile-first web application for a luxury rug retailer. Features a browser-native AR experience and a gesture-based 2D room visualizer fallback.
 
-## Features
+## 🚀 Deployment (GitHub Pages)
 
-- **Product Catalog**: Curated grid of luxury rugs with filtering (mocked).
-- **AR Visualization**: "See in your room" functionality using WebXR/Quick Look.
-- **2D Room Preview**: Fallback for non-AR devices allowing users to upload a room photo and place rugs.
-- **Admin Dashboard**: Manage inventory and view analytics (mocked for demo).
-- **Responsive Design**: Optimized for iOS Safari and Android Chrome.
+This project is configured for **Next.js Static Export** and deployment via **GitHub Actions**.
 
-## Tech Stack
+### 1. Repository Settings
+To ensure styles and images load correctly on GitHub Pages:
+- Go to **Settings > Pages** in your GitHub repository.
+- Under **Build and deployment > Source**, select **GitHub Actions**.
 
-- **Framework**: Next.js 14 (App Router)
-- **Styling**: Tailwind CSS (v4/PostCSS) + Framer Motion
-- **AR Integration**: `@google/model-viewer`
-- **Database**: Supabase (Client configured)
-- **Icons**: Lucide React
+### 2. Configuration
+The site is currently configured for the subpath `/AR-Visualizer/`. If you change your repository name, update `basePath` and `assetPrefix` in `next.config.ts`.
 
-## Getting Started
+### 3. Database vs Mock Mode
+- **Testing Mode**: Currently, `lib/api.ts` has `isMock = true` to allow testing on GitHub Pages without a live Supabase connection.
+- **Production Mode**: Set `isMock = false` and provide `NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_ANON_KEY` in your GitHub repository **Secrets** or `.env.local`.
 
-1. **Clone and Install**
-   ```bash
-   git clone <repo>
-   cd ar-visualizer
-   npm install
-   ```
+## 🛠 Features
+- **AR Visualization**: Native iOS Quick Look and Android Scene Viewer integration.
+- **2D Room Preview**: Advanced touch gestures (pinch-to-zoom, rotate, drag).
+- **QR Handoff**: Desktop users can scan a QR code to launch the AR view on mobile.
+- **Admin Dashboard**: (In simulation mode) To manage products and view analytics.
 
-2. **Environment Setup**
-   Create a `.env.local` file with your Supabase credentials (optional for demo mode):
-   ```bash
-   NEXT_PUBLIC_SUPABASE_URL=your_supabase_url
-   NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_key
-   ```
-   *Note: If keys are missing, the app will fallback to mock data.*
+## 💻 Local Development
 
-3. **Run Development Server**
-   ```bash
-   npm run dev
-   ```
-   Open [http://localhost:3000](http://localhost:3000).
+```bash
+npm install
+npm run dev
+```
 
-4. **Database Setup**
-   Run the `schema.sql` script in your Supabase SQL Editor to create tables and seed data.
+Open [http://localhost:3000](http://localhost:3000) to view the app.
 
-## Deployment
-
-This app is ready for deployment on **Vercel**:
-
-1. Push code to GitHub.
-2. Import project in Vercel.
-3. Add Environment Variables (`NEXT_PUBLIC_SUPABASE_URL`, etc).
-4. Deploy.
-
-## Verification
-
-- **AR Mode**: Open the app on an ARCore (Android) or ARKit (iOS) compatible device. Go to a product and click "View in Your Room".
-- **2D Mode**: On desktop or unsupported devices, use the "2D Preview" button in the AR view or fallback prompt.
+## 📦 Tech Stack
+- **Next.js 14/15** (App Router)
+- **TypeScript**
+- **Tailwind CSS** (Luxury Theme)
+- **Supabase** (Postgres + Auth)
+- **Model Viewer** (Google)
+- **Use Gesture** (Advanced Touch Controls)

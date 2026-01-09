@@ -2,6 +2,9 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   output: 'export',
+  basePath: '/AR-Visualizer',
+  assetPrefix: '/AR-Visualizer',
+  trailingSlash: true,
   images: {
     unoptimized: true,
     remotePatterns: [
