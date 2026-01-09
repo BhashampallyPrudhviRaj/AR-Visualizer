@@ -14,105 +14,123 @@ export default async function Home() {
       <Header />
       
       {/* Hero Section */}
-      <section className="relative h-[80vh] w-full bg-stone-900 flex items-center justify-center overflow-hidden">
-        <div className="absolute inset-0 z-0 opacity-60">
-           {/* Placeholder for Hero Image - using a nice gradient/image until asset available */}
+      <section className="relative h-[85vh] w-full bg-stone-900 flex items-center justify-center overflow-hidden">
+        <div className="absolute inset-0 z-0 scale-105">
            <img 
-             src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?q=80&w=2000&auto=format&fit=crop" 
-             alt="Luxury Living Room" 
-             className="w-full h-full object-cover"
+             src="https://atlasruggallery.com/wp-content/uploads/2021/04/Antique-Persian-Heriz-Serapi-Rug-3-scaled.jpg" 
+             alt="Antique Persian Rug" 
+             className="w-full h-full object-cover opacity-50 blur-sm brightness-75 transition-all duration-1000"
            />
+           <div className="absolute inset-0 bg-gradient-to-tr from-black/80 via-black/20 to-transparent" />
         </div>
-        <div className="z-10 text-center px-4 max-w-4xl mx-auto">
-          <h1 className="text-4xl md:text-6xl lg:text-7xl font-serif text-white mb-6 leading-tight">
-             Transform Your Space <br/> With Timeless Art
+        <div className="z-10 text-center px-4 max-w-5xl mx-auto">
+          <div className="mb-4 inline-block px-4 py-1 border border-white/20 rounded-full backdrop-blur-md bg-white/5">
+             <span className="text-[10px] uppercase tracking-[0.4em] text-white/80 font-bold">EST. 1986 — Washington D.C.</span>
+          </div>
+          <h1 className="text-5xl md:text-7xl lg:text-8xl font-serif text-white mb-8 leading-[1.1] tracking-tight">
+             Art for <br/><span className="italic text-[var(--color-atlas-red)]">Your Floor</span>
           </h1>
-          <p className="text-lg md:text-xl text-stone-200 mb-8 font-light max-w-2xl mx-auto">
-            Experience our curated collection of luxury rugs in your own home using our augmented reality visuals.
+          <p className="text-lg md:text-2xl text-stone-200 mb-10 font-light max-w-3xl mx-auto leading-relaxed">
+            Discover a curated collection of world-class antique and modern rugs. Now previewable in your space with advanced AR.
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button asChild size="lg" variant="luxury">
-              <Link href="/catalog">Browse Collection</Link>
+          <div className="flex flex-col sm:flex-row gap-6 justify-center">
+            <Button asChild size="lg" variant="luxury" className="h-16 px-10 text-base shadow-2xl shadow-red-900/40">
+              <Link href="/catalog">Explore Collection</Link>
             </Button>
-            <Button asChild size="lg" variant="outline" className="bg-transparent text-white border-white hover:bg-white hover:text-stone-900">
-              <Link href="/about">Our Story</Link>
+            <Button asChild size="lg" variant="outline" className="h-16 px-10 bg-white/5 text-white border-white/30 backdrop-blur-md hover:bg-white hover:text-black transition-all">
+              <Link href="/showroom">Visit Showroom</Link>
             </Button>
           </div>
+        </div>
+        <div className="absolute bottom-10 left-1/2 -translate-x-1/2 animate-bounce">
+           <div className="w-px h-12 bg-gradient-to-b from-white/0 via-white/50 to-white/0" />
         </div>
       </section>
 
       {/* Featured Section */}
-      <section className="py-20 px-4 md:px-8 bg-stone-50">
+      <section className="py-24 px-4 md:px-8 bg-white">
         <div className="container mx-auto">
-          <div className="flex justify-between items-end mb-12">
+          <div className="flex flex-col md:flex-row justify-between items-center mb-16 text-center md:text-left gap-4">
             <div>
-              <h2 className="text-3xl md:text-4xl font-serif text-stone-900 mb-2">Featured Arrivals</h2>
-              <div className="h-1 w-20 bg-gold-500"></div>
+               <span className="text-[var(--color-atlas-red)] font-bold uppercase tracking-[0.2em] text-xs mb-3 block">Curated Selection</span>
+              <h2 className="text-4xl md:text-5xl font-serif text-stone-900">Featured Masterpieces</h2>
             </div>
-            <Link href="/catalog" className="hidden md:flex items-center text-stone-900 hover:text-gold-600 transition-colors font-medium">
-              View All <ArrowRight className="ml-2 h-4 w-4" />
+            <Link href="/catalog" className="flex items-center text-xs font-bold uppercase tracking-widest text-stone-400 hover:text-[var(--color-atlas-red)] transition-colors border-b border-stone-200 pb-1">
+              View Complete Catalog <ArrowRight className="ml-2 h-4 w-4" />
             </Link>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
             {featuredProducts.map(product => (
               <RugCard key={product.id} product={product} />
             ))}
-          </div>
-          
-           <div className="mt-12 text-center md:hidden">
-            <Button asChild variant="outline">
-              <Link href="/catalog">View All Collection</Link>
-            </Button>
           </div>
         </div>
       </section>
 
       {/* Value Prop / AR Teaser */}
-      <section className="py-20 bg-stone-900 text-stone-50">
-        <div className="container mx-auto px-4 grid md:grid-cols-2 gap-12 items-center">
-           <div className="order-2 md:order-1">
-             <div className="relative aspect-square md:aspect-[4/3] rounded-lg overflow-hidden bg-stone-800">
-               <img 
-                 src="https://images.unsplash.com/photo-1616486338812-3dadae4b4f9d?q=80&w=1200&auto=format&fit=crop" 
-                 alt="Phone showing AR Rug"
-                 className="w-full h-full object-cover opacity-80" 
-               />
-               <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="bg-white/10 backdrop-blur-md rounded-full p-6 border border-white/20">
-                    <span className="font-serif text-2xl">AR Live View</span>
-                  </div>
-               </div>
-             </div>
+      <section className="py-24 bg-stone-950 text-stone-50 overflow-hidden">
+        <div className="container mx-auto px-4 grid lg:grid-cols-2 gap-20 items-center">
+           <div className="relative group">
+              <div className="absolute -inset-4 bg-[var(--color-atlas-red)]/20 rounded-full blur-3xl opacity-50 group-hover:opacity-100 transition-opacity" />
+              <div className="relative aspect-[4/5] rounded-2xl overflow-hidden border border-white/10 shadow-2xl">
+                <img 
+                  src="https://images.unsplash.com/photo-1616486338812-3dadae4b4f9d?q=80&w=1200&auto=format&fit=crop" 
+                  alt="AR Visualization"
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-1000" 
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
+                <div className="absolute bottom-8 left-8 right-8">
+                   <div className="bg-white/10 backdrop-blur-xl rounded-xl p-6 border border-white/10">
+                     <div className="flex items-center gap-4 mb-2">
+                        <div className="w-3 h-3 rounded-full bg-red-500 animate-pulse" />
+                        <span className="text-xs font-bold uppercase tracking-widest text-white/80">AR Live Preview Active</span>
+                     </div>
+                     <p className="text-sm text-stone-300">"The colors matched perfectly with my sofa before I even visited the showroom."</p>
+                   </div>
+                </div>
+              </div>
            </div>
            
-           <div className="order-1 md:order-2">
-             <h2 className="text-3xl md:text-5xl font-serif mb-6 text-white">
-               See It Before <br /> You Buy It
+           <div className="max-w-xl">
+             <span className="text-[var(--color-atlas-red)] font-bold uppercase tracking-[0.2em] text-xs mb-4 block">Innovation</span>
+             <h2 className="text-4xl md:text-6xl font-serif mb-8 text-white leading-tight">
+               Precision <br /> Visualization
              </h2>
-             <p className="text-stone-300 text-lg mb-8 leading-relaxed">
-               Unsure about the size or color? Our Augmented Reality tool lets you virtually place any rug in your room using your smartphone camera. No app download required.
+             <p className="text-stone-400 text-lg mb-10 leading-relaxed font-light">
+               Choosing the perfect rug is an investment in your home. Our proprietary AR tool ensures you make the right choice by virtually placing our inventory in your room with photorealistic accuracy.
              </p>
-             <ul className="space-y-4 mb-8 text-stone-300">
-               <li className="flex items-center gap-3">
-                 <span className="h-2 w-2 rounded-full bg-gold-500"></span>
-                 True-to-scale visualization
-               </li>
-               <li className="flex items-center gap-3">
-                 <span className="h-2 w-2 rounded-full bg-gold-500"></span>
-                 Works on iOS and Android
-               </li>
-               <li className="flex items-center gap-3">
-                 <span className="h-2 w-2 rounded-full bg-gold-500"></span>
-                 Instant "Try in Room" experience
-               </li>
-             </ul>
-             <Button asChild variant="luxury" size="lg">
-               <Link href="/catalog">Try it Now</Link>
+             
+             <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 mb-12">
+                <div className="space-y-2">
+                   <div className="h-px w-8 bg-[var(--color-atlas-red)] mb-4" />
+                   <h4 className="font-bold text-sm uppercase tracking-widest">Instant Scale</h4>
+                   <p className="text-xs text-stone-500">Auto-detects room dimensions for perfect sizing.</p>
+                </div>
+                <div className="space-y-2">
+                   <div className="h-px w-8 bg-[var(--color-atlas-red)] mb-4" />
+                   <h4 className="font-bold text-sm uppercase tracking-widest">Natural Light</h4>
+                   <p className="text-xs text-stone-500">Adapts to your room's lighting conditions.</p>
+                </div>
+                <div className="space-y-2">
+                   <div className="h-px w-8 bg-[var(--color-atlas-red)] mb-4" />
+                   <h4 className="font-bold text-sm uppercase tracking-widest">360° Viewing</h4>
+                   <p className="text-xs text-stone-500">View from any angle in your room.</p>
+                </div>
+                <div className="space-y-2">
+                   <div className="h-px w-8 bg-[var(--color-atlas-red)] mb-4" />
+                   <h4 className="font-bold text-sm uppercase tracking-widest">No App Needed</h4>
+                   <p className="text-xs text-stone-500">Works directly in your mobile browser.</p>
+                </div>
+             </div>
+
+             <Button asChild variant="luxury" size="lg" className="h-14 px-8">
+               <Link href="/catalog">Launch Visualizer</Link>
              </Button>
            </div>
         </div>
       </section>
+
 
       <Footer />
     </div>
