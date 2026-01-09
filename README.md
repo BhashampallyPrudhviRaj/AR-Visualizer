@@ -1,36 +1,59 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Luxe Rugs AR Visualizer
+
+A premium, mobile-first web application for visualizing luxury rugs in augmented reality. Built with Next.js 14, TypeScript, Tailwind CSS, and Google's `<model-viewer>`.
+
+## Features
+
+- **Product Catalog**: Curated grid of luxury rugs with filtering (mocked).
+- **AR Visualization**: "See in your room" functionality using WebXR/Quick Look.
+- **2D Room Preview**: Fallback for non-AR devices allowing users to upload a room photo and place rugs.
+- **Admin Dashboard**: Manage inventory and view analytics (mocked for demo).
+- **Responsive Design**: Optimized for iOS Safari and Android Chrome.
+
+## Tech Stack
+
+- **Framework**: Next.js 14 (App Router)
+- **Styling**: Tailwind CSS (v4/PostCSS) + Framer Motion
+- **AR Integration**: `@google/model-viewer`
+- **Database**: Supabase (Client configured)
+- **Icons**: Lucide React
 
 ## Getting Started
 
-First, run the development server:
+1. **Clone and Install**
+   ```bash
+   git clone <repo>
+   cd ar-visualizer
+   npm install
+   ```
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+2. **Environment Setup**
+   Create a `.env.local` file with your Supabase credentials (optional for demo mode):
+   ```bash
+   NEXT_PUBLIC_SUPABASE_URL=your_supabase_url
+   NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_key
+   ```
+   *Note: If keys are missing, the app will fallback to mock data.*
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+3. **Run Development Server**
+   ```bash
+   npm run dev
+   ```
+   Open [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+4. **Database Setup**
+   Run the `schema.sql` script in your Supabase SQL Editor to create tables and seed data.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Deployment
 
-## Learn More
+This app is ready for deployment on **Vercel**:
 
-To learn more about Next.js, take a look at the following resources:
+1. Push code to GitHub.
+2. Import project in Vercel.
+3. Add Environment Variables (`NEXT_PUBLIC_SUPABASE_URL`, etc).
+4. Deploy.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Verification
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- **AR Mode**: Open the app on an ARCore (Android) or ARKit (iOS) compatible device. Go to a product and click "View in Your Room".
+- **2D Mode**: On desktop or unsupported devices, use the "2D Preview" button in the AR view or fallback prompt.
