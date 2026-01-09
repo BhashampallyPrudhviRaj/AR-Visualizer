@@ -67,6 +67,12 @@ export default function ArViewer({ src, iosSrc, alt, poster }: ArViewerProps) {
         <div id="error" className="hide">
            AR is not supported on this device
         </div>
+
+        <div className="absolute top-20 left-1/2 -translate-x-1/2 z-10 pointer-events-none">
+           <span className="bg-black/60 text-white text-[10px] uppercase tracking-tighter px-2 py-0.5 rounded backdrop-blur-sm border border-white/10">
+              Mock 3D Asset (Astronaut)
+           </span>
+        </div>
       </model-viewer>
       
       {/* Controls Overlay (Non-AR mode) */}

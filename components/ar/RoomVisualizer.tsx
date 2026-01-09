@@ -10,8 +10,10 @@ interface RoomVisualizerProps {
   onClose: () => void
 }
 
-export function RoomVisualizer({ rugImageUrl, onClose }: RoomVisualizerProps) {
+export function RoomVisualizer({ rugImageUrl: initialRugUrl, onClose }: RoomVisualizerProps) {
   const [roomImage, setRoomImage] = useState<string | null>(null)
+  const [customRugUrl, setCustomRugUrl] = useState<string | null>(null)
+  const [isCameraActive, setIsCameraActive] = useState(false)
   
   // Transform state
   const [position, setPosition] = useState({ x: 0, y: 0 })
@@ -19,6 +21,44 @@ export function RoomVisualizer({ rugImageUrl, onClose }: RoomVisualizerProps) {
   const [rotation, setRotation] = useState(0)
   
   const containerRef = useRef<HTMLDivElement>(null)
+  const videoRef = useRef<HTMLVideoElement>(null)
+
+  const activeRugUrl = customRugUrl || initialRugUrl
+
+  // Start Camera
+  const startCamera = async () => {
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({ 
+        video: { facingMode: 'environment' }, 
+        audio: false 
+      })
+      if (videoRef.current) {
+        videoRef.current.srcObject = stream
+        setIsCameraActive(true)
+        setRoomImage(null) // Clear static image if camera is on
+      }
+    } catch (err) {
+      console.error("Camera access denied:", err)
+      alert("Please allow camera access to use Live View.")
+    }
+  }
+
+  // Stop Camera
+  const stopCamera = () => {
+    if (videoRef.current && videoRef.current.srcObject) {
+      const tracks = (videoRef.current.srcObject as MediaStream).getTracks()
+      tracks.forEach(track => track.stop())
+      setIsCameraActive(false)
+    }
+  }
+
+  // Handle Rug Upload
+  const handleRugUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files[0]) {
+      const url = URL.createObjectURL(e.target.files[0])
+      setCustomRugUrl(url)
+    }
+  }
 
   // Gestures
   useGesture(
@@ -27,7 +67,6 @@ export function RoomVisualizer({ rugImageUrl, onClose }: RoomVisualizerProps) {
         setPosition({ x, y })
       },
       onPinch: ({ offset: [s, a], memo }) => {
-         // Memo stores initial scale/rotation if needed, but here offset accumulates
          setScale(s)
          setRotation(a)
          return memo
@@ -41,7 +80,7 @@ export function RoomVisualizer({ rugImageUrl, onClose }: RoomVisualizerProps) {
     {
       target: containerRef,
       drag: { from: () => [position.x, position.y] },
-      pinch: { scaleBounds: { min: 0.5, max: 4 }, from: () => [scale, rotation] },
+      pinch: { scaleBounds: { min: 0.1, max: 5 }, from: () => [scale, rotation] },
       eventOptions: { passive: false }
     }
   )
@@ -50,101 +89,118 @@ export function RoomVisualizer({ rugImageUrl, onClose }: RoomVisualizerProps) {
     if (e.target.files && e.target.files[0]) {
       const url = URL.createObjectURL(e.target.files[0])
       setRoomImage(url)
-      // Reset transforms on new image
-      setPosition({ x: 0, y: 0 })
-      setScale(1)
-      setRotation(0)
+      setIsCameraActive(false) // Turn off camera if uploading static photo
+      stopCamera()
     }
   }
 
-  // Perspectve toggle? For now just flat 2D + perspective illusion
-  
   return (
-    <div className="fixed inset-0 z-50 bg-black flex flex-col items-center justify-center touch-none">
+    <div className="fixed inset-0 z-50 bg-black flex flex-col items-center justify-center touch-none overflow-hidden">
       {/* Header / Controls */}
-      <div className="absolute top-0 left-0 right-0 p-4 flex justify-between items-center z-20 bg-gradient-to-b from-black/80 to-transparent pointer-events-none">
-        <Button variant="ghost" className="text-white pointer-events-auto" onClick={onClose}>
-          <X className="mr-2" /> Use 3D Mode
+      <div className="absolute top-0 left-0 right-0 p-4 flex justify-between items-start z-30 bg-gradient-to-b from-black/80 to-transparent pointer-events-none">
+        <Button variant="ghost" className="text-white pointer-events-auto bg-black/20 backdrop-blur-sm rounded-full" onClick={() => { stopCamera(); onClose(); }}>
+          <X className="mr-2" /> Exit
         </Button>
+
+        <div className="flex flex-col gap-2 pointer-events-auto">
+          {!isCameraActive ? (
+            <Button size="sm" variant="luxury" onClick={startCamera}>
+              <Camera className="w-4 h-4 mr-2" /> Live Camera
+            </Button>
+          ) : (
+            <Button size="sm" variant="outline" className="text-white border-white/20 bg-black/40" onClick={stopCamera}>
+               Stop Camera
+            </Button>
+          )}
+          
+          <label className="cursor-pointer">
+            <input type="file" accept="image/*" className="hidden" onChange={handleRugUpload} />
+            <div className="flex h-9 items-center justify-center rounded-md bg-white/10 px-3 text-xs font-medium text-white backdrop-blur-sm border border-white/20 hover:bg-white/20">
+               Select Custom Rug Photo
+            </div>
+          </label>
+        </div>
       </div>
 
-      {/* Main Canvas Area */}
-      <div className="relative w-full h-full flex items-center justify-center overflow-hidden bg-stone-900">
-        {!roomImage ? (
-          <div className="text-center p-8 max-w-md">
-            <div className="bg-stone-800 rounded-full p-6 mx-auto w-20 h-20 flex items-center justify-center mb-6">
-               <Upload className="w-8 h-8 text-stone-300" />
+      {/* Main Viewport */}
+      <div className="relative w-full h-full flex items-center justify-center bg-stone-900">
+        {/* Live Video Background */}
+        <video 
+          ref={videoRef}
+          autoPlay 
+          playsInline 
+          muted 
+          className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-500 ${isCameraActive ? 'opacity-100' : 'opacity-0'}`}
+        />
+
+        {/* Static Room Background */}
+        {roomImage && !isCameraActive && (
+          <img 
+            src={roomImage} 
+            alt="Room" 
+            className="absolute inset-0 w-full h-full object-contain pointer-events-none select-none" 
+          />
+        )}
+
+        {/* Empty State */}
+        {!isCameraActive && !roomImage && (
+          <div className="text-center p-8 max-w-sm z-10">
+            <h3 className="text-2xl font-serif text-white mb-6">Choose Your View</h3>
+            <div className="flex flex-col gap-4">
+               <Button size="lg" variant="luxury" onClick={startCamera} className="h-16">
+                 <Camera className="w-6 h-6 mr-3" /> Start Live Camera
+               </Button>
+               <div className="text-stone-500 text-sm">--- OR ---</div>
+               <label className="cursor-pointer">
+                 <input type="file" accept="image/*" className="hidden" onChange={handleFileChange} />
+                 <div className="flex h-16 items-center justify-center rounded-md border border-white/20 bg-white/5 text-white hover:bg-white/10 transition-colors">
+                   <Upload className="w-6 h-6 mr-3" /> Upload Room Photo
+                 </div>
+               </label>
             </div>
-            <h3 className="text-2xl font-serif text-white mb-4">Upload Your Room</h3>
-            <p className="text-stone-400 mb-8">
-              Take a photo of your room or upload an existing one. <br/>
-              <span className="text-sm opacity-75">Use gestures to pinch, zoom, and drag the rug.</span>
-            </p>
-            <label className="cursor-pointer pointer-events-auto relative z-30 block">
-              <input 
-                type="file" 
-                accept="image/*" 
-                capture="environment"
-                className="hidden" 
-                onChange={handleFileChange} 
-              />
-              <span className="inline-flex h-12 items-center justify-center rounded-md bg-gold-600 px-8 text-sm font-medium text-white shadow transition-colors hover:bg-gold-700 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring">
-                <Upload className="mr-2 h-4 w-4" /> Take Photo / Upload
-              </span>
-            </label>
           </div>
-        ) : (
-          <div className="relative w-full h-full overflow-hidden">
-            {/* Background Room Image */}
-            <img 
-              src={roomImage} 
-              alt="Room" 
-              className="w-full h-full object-contain pointer-events-none select-none" 
-            />
-            
-            {/* Draggable Rug Container - We attach gesture listener logic via ref if using non-react-dom-events, 
-                but useGesture hook creates handlers we can spread or target via ref. 
-                Using 'target' option in hook allows cleaner DOM. 
-            */}
-            <div 
-               ref={containerRef}
-               className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 cursor-move touch-none"
-               style={{
-                 transform: `translate(${position.x}px, ${position.y}px) rotate(${rotation}deg) scale(${scale})`,
-                 touchAction: 'none' 
-               }}
-            >
-               {/* Grid overlay helper logic could go here */}
-               <div className="relative group">
-                  <img 
-                    src={rugImageUrl} 
-                    alt="Rug" 
-                    className="max-w-[300px] shadow-2xl pointer-events-none select-none" 
-                    style={{ transform: 'perspective(800px) rotateX(20deg)' }} 
-                  />
-                  {/* Subtle border to show selection */}
-                  <div className="absolute inset-0 border-2 border-white/30 rounded-sm" />
-               </div>
-            </div>
-            
-             {/* Instructions Overlay (Fades out) */}
-             <div className="absolute bottom-24 left-0 right-0 text-center pointer-events-none opacity-60">
-                <span className="bg-black/60 text-white text-xs px-3 py-1 rounded-full backdrop-blur-md">
-                   Pinch to resize • Two fingers to rotate
-                </span>
+        )}
+
+        {/* The Adjustable Rug Overlay (Visible only when camera/photo exists) */}
+        {(isCameraActive || roomImage) && (
+          <div 
+             ref={containerRef}
+             className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 cursor-move touch-none z-20"
+             style={{
+               transform: `translate(${position.x}px, ${position.y}px) rotate(${rotation}deg) scale(${scale})`,
+               touchAction: 'none' 
+             }}
+          >
+             <div className="relative">
+                <img 
+                  src={activeRugUrl} 
+                  alt="Rug" 
+                  className="max-w-[80vw] md:max-w-[400px] shadow-2xl pointer-events-none select-none" 
+                  style={{ transform: 'perspective(1000px) rotateX(25deg)' }} 
+                />
+                <div className="absolute inset-0 border-2 border-white/30 rounded-sm pointer-events-none" />
              </div>
+          </div>
+        )}
+
+        {/* Instructions */}
+        {(isCameraActive || roomImage) && (
+          <div className="absolute bottom-28 left-0 right-0 text-center pointer-events-none z-30 opacity-70">
+             <span className="bg-black/60 text-white text-[10px] uppercase tracking-widest px-3 py-1 rounded-full backdrop-blur-md">
+                Pinch to Resize • Two Fingers to Rotate • Drag to Place
+             </span>
           </div>
         )}
       </div>
 
-      {/* Basic Reset Controls - Optional but helpful */}
-      {roomImage && (
-        <div className="absolute bottom-0 left-0 right-0 bg-stone-900/80 backdrop-blur border-t border-white/10 p-4 pb-8 z-20 flex justify-center gap-4">
-           <Button variant="ghost" size="sm" onClick={() => { setScale(1); setRotation(0); setPosition({x:0, y:0}); }} className="text-white hover:bg-white/10">
-             Reset View
+      {/* Footer Actions */}
+      {(isCameraActive || roomImage) && (
+        <div className="absolute bottom-0 left-0 right-0 bg-stone-900/80 backdrop-blur-lg border-t border-white/10 p-6 z-40 flex justify-center gap-4">
+           <Button variant="ghost" className="text-white hover:bg-white/10" onClick={() => { setScale(1); setRotation(0); setPosition({x:0, y:0}); }}>
+             Reset Rug
            </Button>
-           <Button variant="outline" size="sm" className="bg-transparent text-white border-white/20" onClick={() => setRoomImage(null)}>
-             New Photo
+           <Button variant="outline" className="border-white/20 text-white" onClick={() => { setRoomImage(null); setCustomRugUrl(null); stopCamera(); }}>
+             New Scene
            </Button>
         </div>
       )}
