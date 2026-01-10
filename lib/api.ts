@@ -15,7 +15,7 @@ const MOCK_PRODUCTS: Product[] = [
     length_cm: 386,
     category: 'Antique',
     colors: ['Red', 'Navy', 'Cream'],
-    image_url: 'https://atlasruggallery.com/wp-content/uploads/2021/04/Antique-Persian-Heriz-Serapi-Rug-3-scaled.jpg',
+    image_url: 'https://atlasruggallery.com/index_htm_files/2968@2x.jpg',
     model_url: 'https://modelviewer.dev/shared-assets/models/Astronaut.glb',
     created_at: new Date().toISOString()
   },
@@ -29,7 +29,7 @@ const MOCK_PRODUCTS: Product[] = [
     length_cm: 335,
     category: 'Antique',
     colors: ['Rust', 'Beige', 'Black'],
-    image_url: 'https://atlasruggallery.com/wp-content/uploads/2021/04/Antique-Persian-Mahal-Rug-1-scaled.jpg',
+    image_url: 'https://atlasruggallery.com/index_htm_files/2969@2x.jpg',
     model_url: 'https://modelviewer.dev/shared-assets/models/Astronaut.glb',
     created_at: new Date().toISOString()
   },
@@ -43,7 +43,7 @@ const MOCK_PRODUCTS: Product[] = [
     length_cm: 279,
     category: 'Vintage',
     colors: ['Ivory', 'Blue', 'Grey'],
-    image_url: 'https://atlasruggallery.com/wp-content/uploads/2021/04/Oshak-Rug-1-scaled.jpg',
+    image_url: 'https://atlasruggallery.com/index_htm_files/2970@2x.jpg',
     model_url: 'https://modelviewer.dev/shared-assets/models/Astronaut.glb',
     created_at: new Date().toISOString()
   },
@@ -57,7 +57,7 @@ const MOCK_PRODUCTS: Product[] = [
     length_cm: 416,
     category: 'Traditional',
     colors: ['Terracotta', 'Sage', 'Gold'],
-    image_url: 'https://atlasruggallery.com/wp-content/uploads/2021/04/Turkish-Oshak-Rug-1-scaled.jpg',
+    image_url: 'https://atlasruggallery.com/index_htm_files/2971@2x.jpg',
     model_url: 'https://modelviewer.dev/shared-assets/models/Astronaut.glb',
     created_at: new Date().toISOString()
   }

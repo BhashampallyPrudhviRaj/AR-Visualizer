@@ -10,7 +10,7 @@ export function Header() {
           <Link href="/" className="flex items-center gap-3 group">
             <div className="relative w-10 h-10 overflow-hidden rounded-full border border-stone-200 bg-white p-1 group-hover:border-[var(--color-atlas-red)] transition-colors">
               <img 
-                src="https://atlasruggallery.com/wp-content/uploads/2021/01/Atlas-Rug-Gallery-Logo-Red-1.png" 
+                src="https://atlasruggallery.com/index_htm_files/3332@2x.png" 
                 alt="Atlas Rug Gallery" 
                 className="w-full h-full object-contain"
               />

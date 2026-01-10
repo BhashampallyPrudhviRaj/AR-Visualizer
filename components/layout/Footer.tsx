@@ -3,17 +3,17 @@ import Link from "next/link"
 export function Footer() {
   return (
     <footer className="w-full border-t border-stone-200 bg-stone-50 py-12 px-4 md:px-6">
-      <div className="container mx-auto grid grid-cols-1 md:grid-cols-3 gap-12 text-sm">
+      <div className="container mx-auto grid grid-cols-1 md:grid-cols-3 gap-8 text-sm">
         <div>
           <span className="text-xl font-bold uppercase tracking-widest text-[var(--color-atlas-red)] mb-4 block leading-tight">
             Atlas Rug Gallery
           </span>
           <p className="text-stone-500 max-w-xs mb-6 font-light">
-            Serving the Washington DC metro area since 1986. Specializing in fine antique, vintage, and modern rugs from around the world.
+            Serving the Fort Worth TX area since 1986. Specializing in fine antique, vintage, and modern rugs from around the world.
           </p>
           <div className="flex flex-col gap-1 text-stone-400 italic font-light">
-            <p>3214 O St NW</p>
-            <p>Washington, DC 20007</p>
+            <p>Fort Worth</p>
+            <p>Texas</p>
           </div>
         </div>
         

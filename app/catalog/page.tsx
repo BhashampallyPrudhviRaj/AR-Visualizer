@@ -11,19 +11,19 @@ export default async function CatalogPage() {
     <div className="min-h-screen flex flex-col bg-stone-50">
       <Header />
       <main className="flex-1 container mx-auto px-4 py-8 md:px-6 md:py-12">
-        <div className="flex flex-col md:flex-row justify-between items-end mb-12 gap-6">
+        <div className="flex flex-col md:flex-row justify-between items-baseline mb-8">
             <div>
-              <span className="text-[var(--color-atlas-red)] font-bold uppercase tracking-[0.2em] text-xs mb-3 block">Atlas Collections</span>
-              <h1 className="text-4xl md:text-6xl font-serif text-stone-900 mb-4">
+              <h1 className="text-3xl md:text-4xl font-serif text-stone-900 mb-2">
                 The Collection
               </h1>
-              <p className="text-stone-500 max-w-lg leading-relaxed text-lg font-light">
-                Discover our hand-picked selection of world-class antique and modern rugs. 
-                Experience legendary craftsmanship in your own space.
+              <p className="text-stone-500 max-w-lg">
+                Discover our hand-picked selection of artisanal rugs. 
+                Use our AR visualizer to see how they look in your home.
               </p>
             </div>
-            <div className="text-[10px] uppercase tracking-[0.2em] text-stone-400 font-bold border-b border-stone-200 pb-2">
-               {products.length} Masterpieces Available
+            {/* Filter Placeholder - Task 14 */}
+            <div className="mt-4 md:mt-0 text-sm text-stone-500">
+               Showing {products.length} results
             </div>
         </div>
 

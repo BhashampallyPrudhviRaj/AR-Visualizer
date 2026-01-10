@@ -45,20 +45,18 @@ export default async function ProductPage({ params }: { params: { slug: string }
           
           {/* Product Details */}
           <div className="flex flex-col">
-            <div className="mb-4">
-               <span className="text-xs font-bold uppercase tracking-[0.3em] text-[var(--color-atlas-red)]">{product.category} Masterpiece</span>
+            <div className="mb-2">
+               <span className="text-sm font-medium uppercase tracking-wider text-stone-500">{product.category}</span>
             </div>
-            <h1 className="text-4xl md:text-6xl font-serif text-stone-900 mb-6 leading-tight">{product.title}</h1>
-            <p className="text-3xl font-light text-stone-900 mb-10">${product.price.toLocaleString()}</p>
-            
-            <div className="prose prose-stone text-stone-600 mb-10 leading-relaxed max-w-none text-lg">
-              <p className="font-light">
-                This {product.category.toLowerCase()} rug represents the pinnacle of artisanal weaving. 
-                Featuring a sophisticated palette of {product.colors?.join(", ").toLowerCase()}, it brings a 
-                timeless elegance to any curated interior. Each piece in our collection is carefully 
-                vetted for its historical significance and aesthetic quality.
-              </p>
-              <p className="mt-6 font-medium text-stone-900 border-l-2 border-[var(--color-atlas-red)] pl-4 italic">
+               <h1 className="text-3xl md:text-5xl font-serif text-stone-900 mb-4">{product.title}</h1>
+            <p className="text-2xl font-medium text-stone-900 mb-8">${product.price.toLocaleString()}</p>
+
+
+             <div className="prose text-stone-600 mb-8">
+              <p>
+                Handcrafted with precision, this {product.category.toLowerCase()} rug features 
+                intricate patterns and a luxurious texture. Perfect for adding warmth and 
+                elegance to any room. 
                 Dimensions: {product.dimensions_label} ({product.width_cm}cm x {product.length_cm}cm).
               </p>
             </div>
